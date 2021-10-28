@@ -1,8 +1,8 @@
 <script lang='ts'>
   import { fade } from 'svelte/transition'
   import * as Auth from '$lib/ts/auth'
-import { dataset_dev } from 'svelte/internal'
-import { session } from '$app/stores'
+  import { dataset_dev } from 'svelte/internal'
+  import { session } from '$app/stores'
   import type { User, Session } from '@supabase/supabase-js'
   
   let phone:string
@@ -26,14 +26,14 @@ import { session } from '$app/stores'
   Auth.authStore.subscribe((update)=> {
     loggedIn = update.loggedIn
   })
-
+  
   const clearResponses = () => {
     signupSuccess = false
     loginSuccess = false
     error = null
     logOutSuccess = false
   }
-
+  
   function shakeDropdown () {
     let box = document.getElementById('auth-dropdown')
     let counter = 0
@@ -139,34 +139,32 @@ import { session } from '$app/stores'
 {/if}
 {#if error}
 <p class='span-both error'>
-<span>{`${error.message} :<`}</span>
+  <span>{`${error.message} :<`}</span>
 </p>
 {/if}
 {#if signupSuccess}
 <p class='span-both success'>
-<span>Congrats! Check your email to validate your account :></span>
+  <span>Congrats! Check your email to validate your account :></span>
 </p>
 {/if}
 {#if loginSuccess}
 <p class='span-both success'>
-<span>Congrats! You're now logged in :></span>
+  <span>Congrats! You're now logged in :></span>
 </p>
 {/if}
 {#if logOutSuccess}
 <p class='span-both success'>
-<span>Congrats! You've now logged out :></span>
+  <span>Congrats! You've now logged out :></span>
 </p>
 {/if}
 </div>
-{:else}
-{keysLockedOut = false}
 {/if}
 
 
 <style lang='scss'>
   #auth-menu {
     padding:1em;
-    position:absolute;
+    position:fixed;
     // position:fixed;
     right:0px;
     z-index: 150;
@@ -238,7 +236,7 @@ import { session } from '$app/stores'
     width:100%;
     z-index: 140;
   }
-
+  
   .error {
     color: hsl(20,100%,50%);
   }

@@ -30,13 +30,13 @@ function loadFromLocal (appStorage:Storage, prop:string, value:unknown):unknown 
 
 type AutosaveArgsT = {
   userData: User
-  frameList: Array<FrameT>
+  frameList?: Array<FrameT>
 }
 function autosave (args:AutosaveArgsT):void {
   if (args.userData == null){
-  saveToLocal(appStorage, 'frameList', args.frameList)
+  // saveToLocal(appStorage, 'frameList', args.frameList)
   } else {
-    Storage.uploadFrames(args.userData,args.frameList)
+    // Storage.uploadFrames(args.userData,args.frameList)
   }
   console.log('saved uwu ✨')
 }

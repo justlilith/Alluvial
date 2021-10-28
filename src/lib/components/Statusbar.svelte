@@ -21,17 +21,19 @@
 <section id='statusbar'>
   <div id='user-stuff'>
     {#if loggedIn}
-    <span>Welcome to Polyref! Logged in as: {user}</span>
+    <span>Welcome to Alluvial! Logged in as: {user}</span>
     {:else}
-    <span>Welcome to Polyref. Sign up above to access your ref board from anywhere!</span>
+    <span>Welcome to Alluvial!</span>
+    <!-- Wait until we make a new supabase db to enable logging in -->
+    <!-- <span>Welcome to Alluvial. Sign up above to access your ref board from anywhere!</span> -->
     {/if}
   </div>
   <div>
     <Crier></Crier>
   </div>
   <div id='dock'>
-		<span class="material-icons">info</span>
-    <span>What is Polyref?</span>
+		<!-- <span class="material-icons">info</span> -->
+    <!-- <span>What is Alluvial?</span> -->
   </div>
 </section>
 
