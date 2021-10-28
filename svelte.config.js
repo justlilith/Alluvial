@@ -7,8 +7,9 @@ const config = {
 	// for more information about preprocessors
 	preprocess: preprocess(
 		{
-			scss:'node-sass'
-		}
+			scss:'node-sass',
+			// preserve: ['module']
+		},
 	),
 	
 	kit: {
