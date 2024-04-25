@@ -4,6 +4,7 @@
 import { AlluvialNode } from "./node";
 import { AlluvialContextMenu } from "./contextMenu";
 import { activeNode } from "./constants";
+import p5 from "p5";
 
 const p5sketch = {
   nodeList: new Array<AlluvialNode>(),
@@ -11,7 +12,7 @@ const p5sketch = {
 }
 p5sketch.nodeList = [];
 
-p5sketch.function = function (p) {
+p5sketch.function = function (p: p5) {
   let node12;
   let node2;
   let node3;
@@ -21,7 +22,6 @@ p5sketch.function = function (p) {
   let add;
   let divide;
   let links = [];
-  let contextMenu = new AlluvialContextMenu({ p })
 
   p.setup = () => {
     console.log(p)
@@ -137,7 +137,7 @@ p5sketch.function = function (p) {
           p.strokeWeight(2);
           p.noFill();
           // line(...node.in, ...link.out);
-          let linkLine = p.bezier(...node.in, node.in[0] - 50, node.in[1], link.out[0] + 50, link.out[1], ...link.out);
+          let linkLine = p.bezier(node.in[0], node.in[1], node.in[0] - 50, node.in[1], link.out[0] + 50, link.out[1], link.out[0], link.out[1]);
           let constant = 2;
 
           for (let i = 0; i < constant; i++) {
@@ -155,7 +155,7 @@ p5sketch.function = function (p) {
                 // console.log(clickable)
               } else {
                 let clickable = p.createDiv();
-                clickable.mousePressed = (event) => {
+                clickable.mousePressed((event) => {
                   if (!activeNode) {
                     console.log(event);
                     node.inputs = node.inputs.filter((input) => {
@@ -167,7 +167,7 @@ p5sketch.function = function (p) {
                     });
                     // console.log(node.frame.linkLines.list)
                   }
-                }
+                })
                 clickable.id(id);
                 clickable.position(x - 7.5, y - 7.5);
                 clickable.size(15, 15);
@@ -188,37 +188,14 @@ p5sketch.function = function (p) {
 
   function orchestrate() {
     if (activeNode != null) {
-      activeNode?.node ? p.line(...activeNode?.node.out, p.mouseX, p.mouseY) : null;
+      activeNode?.node ? p.line(activeNode?.node.out[0], activeNode?.node.out[1], p.mouseX, p.mouseY) : null;
     }
     if (contextMenu.displayMenu == true) {
       contextMenu.display();
     }
   }
 
-  p.mouseClicked = (event) => {
-    if (event.target.classList.contains("p5Canvas")) {
-      activeNode.node = null;
-      p5sketch.nodeList = p5sketch.nodeList.map((node) => {
-        // return { ...node, frame: { ...frame, clickHeld: false } };
-        node.clickHeld = false;
-        return node;
-      });
-    }
-  }
 
-  p.mousePressed = (event) => {
-    if (event.buttons == 2 && event.target.classList.contains("p5Canvas")) {
-      // event.preventDefault();
-      // console.log(event);
-      // console.log("💙");
-      showContextMenu(event);
-    }
-    if (event.buttons == 1 && event.target.classList.contains("p5Canvas")) {
-      // console.log("💙");
-
-      hideContextMenu();
-    }
-  }
 
   function removeLink(args) {
     // args.from, args.to == nodes
@@ -243,6 +220,8 @@ p5sketch.function = function (p) {
   p.windowResized = () => {
     p.resizeCanvas(p.windowWidth, p.windowHeight);
   }
+
+  let contextMenu = new AlluvialContextMenu({ p })
 
 }
 
